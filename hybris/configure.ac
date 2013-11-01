@@ -95,49 +95,20 @@ AC_ARG_WITH(default-egl-platform,
   [ ])
 AC_SUBST(DEFAULT_EGL_PLATFORM)
 
-android_headers_path=""
-AC_ARG_WITH(android-headers,
-  [  --with-android-headers=DIR     Use android headers available in DIR. See utils/extract-headers.sh ],
-  [
-      if [ ! test -e $withval/android-version.h ]; then
-	echo "Error! missing android-version.h in android header path"
-	exit 1
-      fi 
-      rm -f include/android
-      ln -sf $withval include/android   	
-      android_headers_path="$withval"      
-
-      # According to http://en.wikipedia.org/wiki/Android_version_history#Version_history_by_API_level
-      android_headers_major=`grep -E "define ANDROID_VERSION_MAJOR " $android_headers_path/android-version.h | sed "s|^\#define ANDROID_VERSION_MAJOR \(.*\)$|\1|g"`
-
-      android_headers_minor=`grep -E "define ANDROID_VERSION_MINOR " $android_headers_path/android-version.h | sed "s|^\#define ANDROID_VERSION_MINOR \(.*\)$|\1|g"`
-
-      android_headers_patch=`grep -E "define ANDROID_VERSION_PATCH " $android_headers_path/android-version.h | sed "s|^\#define ANDROID_VERSION_PATCH \(.*\)$|\1|g"`
-  
-      if [ test "x$android_headers_major" = x ]; then
-	  echo "Error! Was unable to locate define ANDROID_VERSION_MAJOR in $android_headers_path/android-version.h"
-      fi
-
-      AC_SUBST(ANDROID_VERSION_MAJOR, [$android_headers_major])
-      AC_SUBST(ANDROID_VERSION_MINOR, [$android_headers_minor])
-      AC_SUBST(ANDROID_VERSION_PATCH, [$android_headers_patch])
-
-      echo "Android headers version is $android_headers_major.$android_headers_minor.$android_headers_patch"
-  ],
-  [
-      echo "Error! need to provide path to Android headers --with-android-headers=DIR. See utils/extract-headers.sh"
-      exit 1
-  ]
-  )
-
 # Add automake tests for version/API needs here that you need in code, including test .am's
 
-AM_CONDITIONAL([HAS_ANDROID_4_2_0], [test $android_headers_major -ge 4 -a $android_headers_minor -ge 2 ])
-AM_CONDITIONAL([HAS_ANDROID_4_1_0], [test $android_headers_major -ge 4 -a $android_headers_minor -ge 1 ])
-AM_CONDITIONAL([HAS_ANDROID_4_0_0], [test $android_headers_major -ge 4 -a $android_headers_minor -ge 0 ])
-AM_CONDITIONAL([HAS_ANDROID_2_3_0], [test $android_headers_major -ge 2 -a $android_headers_minor -ge 3 ])
+AM_CONDITIONAL([HAS_ANDROID_4_2_0], [true])
+#AM_CONDITIONAL([HAS_ANDROID_4_1_0], [test $android_headers_major -ge 4 -a $android_headers_minor -ge 1 ])
+#AM_CONDITIONAL([HAS_ANDROID_4_0_0], [test $android_headers_major -ge 4 -a $android_headers_minor -ge 0 ])
+#AM_CONDITIONAL([HAS_ANDROID_2_3_0], [test $android_headers_major -ge 2 -a $android_headers_minor -ge 3 ])
 
-AM_CONDITIONAL([HAS_LIBNFC_NXP_HEADERS], [test -f ${android_headers_path}/libnfc-nxp/phLibNfc.h])
+#AM_CONDITIONAL([HAS_LIBNFC_NXP_HEADERS], [test -f ${android_headers_path}/libnfc-nxp/phLibNfc.h])
+
+AM_CONDITIONAL([HAS_ANDROID_4_1_0], [true])
+AM_CONDITIONAL([HAS_ANDROID_4_0_0], [true])
+AM_CONDITIONAL([HAS_ANDROID_2_3_0], [false])
+
+AM_CONDITIONAL([HAS_LIBNFC_NXP_HEADERS], [false])
 
 AC_CONFIG_FILES([
 	Makefile
@@ -172,6 +143,7 @@ AC_CONFIG_FILES([
 	sf/Makefile
 	input/Makefile
 	camera/Makefile
+	media/Makefile
 	include/Makefile
 	utils/Makefile
 	tests/Makefile
@@ -194,8 +166,6 @@ echo
 echo "  prefix..................: $prefix"
 echo
 echo "  arch  ..................: $arch"
-echo
-echo "  headers path ...........: $android_headers_path"
 echo
 echo "  default egl platform ...: $DEFAULT_EGL_PLATFORM"
 echo

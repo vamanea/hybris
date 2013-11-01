@@ -62,7 +62,7 @@ HWComposerNativeWindow::HWComposerNativeWindow(unsigned int width, unsigned int 
     m_width = width;
     m_height = height;
     m_bufFormat = format;
-    m_usage = GRALLOC_USAGE_HW_COMPOSER;
+    m_usage = GRALLOC_USAGE_HW_COMPOSER /*| GRALLOC_USAGE_HW_FB*/;
     m_frontBuf = NULL;
 }
 
@@ -456,13 +456,13 @@ int HWComposerNativeWindow::setBufferCount(int cnt)
     {
         HWComposerNativeWindowBuffer *fbnb = new HWComposerNativeWindowBuffer(
                             m_width, m_height, m_bufFormat,
-                            m_usage|GRALLOC_USAGE_HW_COMPOSER|GRALLOC_USAGE_HW_FB);
+                            m_usage|GRALLOC_USAGE_HW_COMPOSER/*|GRALLOC_USAGE_HW_FB*/);
 
         fbnb->common.incRef(&fbnb->common);
 
         err = m_alloc->alloc(m_alloc,
                             m_width, m_height, m_bufFormat,
-                            m_usage|GRALLOC_USAGE_HW_COMPOSER|GRALLOC_USAGE_HW_FB,
+                            m_usage|GRALLOC_USAGE_HW_COMPOSER/*|GRALLOC_USAGE_HW_FB*/,
                             &fbnb->handle, &fbnb->stride);
 
         TRACE("buffer %i is at %p (native %p) err=%s handle=%p stride=%i",

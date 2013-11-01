@@ -24,11 +24,9 @@
 
 #include <hybris/internal/binding.h>
 #include <hybris/media/media_compatibility_layer.h>
-#include <hybris/media/recorder_compatibility_layer.h>
 #include <hybris/media/media_codec_layer.h>
 #include <hybris/media/media_codec_list.h>
 #include <hybris/media/media_format_layer.h>
-#include <hybris/media/surface_texture_client_hybris.h>
 
 #define COMPAT_LIBRARY_PATH "/system/lib/libmedia_codec_compat_layer.so"
 
@@ -50,6 +48,8 @@ int media_compat_check_availability()
 // Media Codecs
 HYBRIS_IMPLEMENT_FUNCTION1(media, MediaCodecDelegate,
 	media_codec_create_by_codec_name, const char*);
+HYBRIS_IMPLEMENT_FUNCTION1(media, MediaCodecDelegate,
+	media_codec_create_by_codec_type, const char*);
 HYBRIS_IMPLEMENT_VOID_FUNCTION1(media, media_codec_delegate_destroy,
 	MediaCodecDelegate);
 HYBRIS_IMPLEMENT_VOID_FUNCTION1(media, media_codec_delegate_ref,
@@ -57,7 +57,7 @@ HYBRIS_IMPLEMENT_VOID_FUNCTION1(media, media_codec_delegate_ref,
 HYBRIS_IMPLEMENT_VOID_FUNCTION1(media, media_codec_delegate_unref,
 	MediaCodecDelegate);
 
-HYBRIS_IMPLEMENT_FUNCTION4(media, int, media_codec_configure,
+HYBRIS_IMPLEMENT_FUNCTION3(media, int, media_codec_configure,
 	MediaCodecDelegate, MediaFormat, uint32_t);
 HYBRIS_IMPLEMENT_FUNCTION2(media, int, media_codec_queue_csd,
 	MediaCodecDelegate, MediaFormat);

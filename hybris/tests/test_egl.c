@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 		EGL_RENDERABLE_TYPE,
 		EGL_OPENGL_ES2_BIT,
 		EGL_NONE
-	};
+};
 	EGLSurface surface;
 	EGLint ctxattr[] = {
 		EGL_CONTEXT_CLIENT_VERSION, 2,

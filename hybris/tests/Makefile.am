@@ -6,7 +6,8 @@ bin_PROGRAMS = \
 	test_sensors \
 	test_input \
 	test_camera \
-	test_gps
+	test_gps \
+	test_media
 
 if HAS_ANDROID_4_2_0
 bin_PROGRAMS += test_hwcomposer
@@ -154,3 +155,12 @@ test_nfc_LDFLAGS =
 test_nfc_LDADD = \
 	$(top_builddir)/libnfc_nxp/libnfc_nxp.la \
 	$(top_builddir)/hardware/libhardware.la
+
+test_media_SOURCES = test_media.c parser.c
+test_media_CFLAGS = \
+        -I$(top_srcdir)/include
+test_media_LDADD = \
+        $(top_builddir)/common/libhybris-common.la \
+        $(top_builddir)/egl/libEGL.la \
+        $(top_builddir)/glesv2/libGLESv2.la \
+        $(top_builddir)/media/libmedia.la

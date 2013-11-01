@@ -32,7 +32,7 @@ extern "C" int hwcomposerws_IsValidDisplay(EGLNativeDisplayType display)
 		if (err) {
 			fprintf(stderr, "WARNING: failed to open framebuffer: (%s)\n",strerror(-err));
 		}
-		printf("** framebuffer_open: status=(%s) format=x%x", strerror(-err), framebuffer->format);
+		//printf("** framebuffer_open: status=(%s) format=x%x", strerror(-err), framebuffer->format);
 	
 
 		err = gralloc_open((const hw_module_t *) gralloc, &alloc);
@@ -42,7 +42,7 @@ extern "C" int hwcomposerws_IsValidDisplay(EGLNativeDisplayType display)
 		}
 		printf("** gralloc_open %p status=%s\n", gralloc, strerror(-err));
 
-		framebuffer_close(framebuffer);
+		//framebuffer_close(framebuffer);
 		eglplatformcommon_init(gralloc, alloc);
 	}
 

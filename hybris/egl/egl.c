@@ -239,7 +239,7 @@ EGLSurface eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config,
 	EGL_DLSYM(&_eglCreateWindowSurface, "eglCreateWindowSurface");
 
 	win = ws_CreateWindow(win,  _egldisplay2NDT(dpy));
-	
+        printf("window %p\n", win);	
 	assert(((struct ANativeWindowBuffer *) win)->common.magic == ANDROID_NATIVE_WINDOW_MAGIC);
 
 	EGLSurface result = (*_eglCreateWindowSurface)(dpy, config, win, attrib_list);
