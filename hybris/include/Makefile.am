@@ -69,3 +69,11 @@ dlfcnincludedir = $(includedir)/hybris/dlfcn
 dlfcninclude_HEADERS = \
 	hybris/dlfcn/dlfcn.h
 
+mediaincludedir = $(includedir)/hybris/media
+mediainclude_HEADERS = \
+	hybris/media/media_codec_layer.h \
+	hybris/media/media_codec_list.h \
+	hybris/media/media_compatibility_layer.h \
+	hybris/media/media_format_layer.h
+
+
