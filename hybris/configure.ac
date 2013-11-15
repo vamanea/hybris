@@ -143,6 +143,7 @@ AC_CONFIG_FILES([
 	sf/Makefile
 	input/Makefile
 	camera/Makefile
+	media/libmedia.pc
 	media/Makefile
 	include/Makefile
 	utils/Makefile

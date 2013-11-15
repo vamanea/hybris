@@ -1,6 +1,9 @@
 lib_LTLIBRARIES = \
 	libmedia.la
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libmedia.pc
+
 libmedia_la_SOURCES = media.c
 libmedia_la_CFLAGS = -I$(top_srcdir)/include
 if WANT_TRACE
