@@ -221,7 +221,7 @@ int HWComposerNativeWindow::queueBuffer(BaseNativeWindowBuffer* buffer, int fenc
     m_freeBufs++;
 
     sync_wait(fenceFd, -1);
-    ::close(fenceFd);    
+    ::close(fenceFd);
 
     pthread_cond_signal(&_cond);
 
@@ -241,7 +241,10 @@ void HWComposerNativeWindow::lockFrontBuffer(HWComposerNativeWindowBuffer **buff
     {
            pthread_cond_wait(&_cond, &_mutex);
     }
-    
+    if(m_frontBuf->busy != 2) {
+           pthread_mutex_unlock(&_mutex);
+           return;
+    }
     assert(m_frontBuf->busy == 2);
     
     m_frontBuf->busy = 3;
